@@ -1,9 +1,9 @@
 from django.contrib import admin
-from api.models import Author
+from api.models import Users
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ["first_name"]
+    list_display = ["email"]
 
 
-admin.site.register(Author, UserAdmin)
+admin.site.register(Users, UserAdmin)

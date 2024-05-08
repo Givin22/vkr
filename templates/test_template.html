@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST</title>
+</head>
+<body>
+    HELLO!<br>
+    Any text: {{ context }}<br>
+    {% if context2 %}
+        {{ context2 }}
+    {% else %}
+        No context
+    {% endif %}
+    <a href="{% url 'test' %}">TEST PAGE</a>
+</body>
+</html>
