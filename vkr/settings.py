@@ -55,8 +55,7 @@ ROOT_URLCONF = 'vkr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,6 +82,7 @@ DATABASES = {
         "PASSWORD": "postgres",
         "HOST": "pgdb",
         "PORT": "5432",
+        "default-character-set": "utf8",
     }
 }
 

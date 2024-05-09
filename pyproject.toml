@@ -6,9 +6,9 @@ authors = ["Givin22 <shmakovdanil061@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 django = "^5.0.4"
-psycopg2-binary = "^2.9.9"
+psycopg = {extras = ["binary"], version = "^3.1.18"}
 
 [build-system]
 requires = ["poetry-core"]
