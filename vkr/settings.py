@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
 ]
 
+AUTH_USER_MODEL = 'api.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -82,7 +84,6 @@ DATABASES = {
         "PASSWORD": "postgres",
         "HOST": "pgdb",
         "PORT": "5432",
-        "default-character-set": "utf8",
     }
 }
 

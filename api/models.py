@@ -1,75 +1,103 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class Profiles(models.Model):
-    first_name = models.CharField(max_length=50)
-    middle_name = models.CharField(max_length=50, null=True)
-    last_name = models.CharField(max_length=50)
-    phone_number = models.Field
-
-
-class User_types(models.Model):
+class User_type(models.Model):
     type = models.CharField(max_length=50) # on default set "settler"?
 
+    def __str__(self):
+        return self.type
 
-class Buildings(models.Model):
+
+class Building(models.Model):
     address = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.address
 
-class Rooms(models.Model):
-    building_id = models.ForeignKey(Buildings, on_delete=models.RESTRICT)
+
+class Room(models.Model):
+    building_id = models.ForeignKey(Building, on_delete=models.RESTRICT)
     number = models.SmallIntegerField()
     capacity = models.SmallIntegerField()
     floor = models.SmallIntegerField()
     section = models.SmallIntegerField()
 
+    def __str__(self):
+        return f"{self.floor}.{self.section}.{self.number} | {self.capacity}"
 
-class Users(models.Model):
-    profile_id = models.ForeignKey(Profiles, on_delete=models.RESTRICT)
-    user_type_id = models.ForeignKey(User_types, on_delete=models.RESTRICT)
-    room_id = models.ForeignKey(Rooms, on_delete=models.RESTRICT)
+
+class User(AbstractUser):
+    username = models.CharField(max_length=255, unique=True)
+    user_type_id = models.ForeignKey(User_type, on_delete=models.RESTRICT, null=True)
+    room_id = models.ForeignKey(Room, on_delete=models.RESTRICT, null=True)
     email = models.EmailField()
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False, null=True)
+    phone_number = models.CharField(max_length=15)
+
+    def __str__(self):
+        return f"phone: {self.phone_number},  email: {self.email}, is_admin: {self.is_admin}"
 
 
-class Schedule_types(models.Model):
+class Schedule_type(models.Model):
     type = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.type
 
 
 class Schedule(models.Model):
-    room_id = models.ForeignKey(Rooms, on_delete=models.RESTRICT, related_name="rooms_seeker")
-    schedule_type_id = models.ForeignKey(Schedule_types, on_delete=models.RESTRICT)
-    checked_room_id = models.ForeignKey(Rooms, on_delete=models.RESTRICT, related_name="rooms_checked")
-    date = models.DateField
+    room_id = models.ForeignKey(Room, on_delete=models.RESTRICT, related_name="rooms_seeker")
+    schedule_type_id = models.ForeignKey(Schedule_type, on_delete=models.RESTRICT)
+    checked_room_id = models.ForeignKey(Room, on_delete=models.RESTRICT, related_name="rooms_checked")
+    date = models.DateField(null=True)
     result = models.BooleanField(null=True)
 
+    def __str__(self):
+        return f"room_id: {self.room_id}, date: {self.date}, result: {self.result}"
 
-class Document_types(models.Model):
+
+class Document_type(models.Model):
     type = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.type
 
-class Documents(models.Model):
-    document_type_id = models.ForeignKey(Document_types, on_delete=models.RESTRICT)
-    author_id = models.ForeignKey(Users, on_delete=models.RESTRICT)
+
+class Document(models.Model):
+    document_type_id = models.ForeignKey(Document_type, on_delete=models.RESTRICT)
+    author_id = models.ForeignKey(User, on_delete=models.RESTRICT)
     title = models.CharField(max_length=255, null=True)
     file = models.BinaryField()
     date = models.DateField()
 
+    def __str__(self):
+        return f"title: {self.title}, date: {self.date}"
 
-class Feeds(models.Model):
-    author_id = models.ForeignKey(Users, on_delete=models.RESTRICT)
+
+class Feed(models.Model):
+    author_id = models.ForeignKey(User, on_delete=models.RESTRICT)
     title = models.CharField(max_length=255)
     text = models.TextField()
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class Feed_to_document(models.Model):
-    document_id = models.ForeignKey(Documents, on_delete=models.RESTRICT)
-    feed_id = models.ForeignKey(Feeds, on_delete=models.RESTRICT)
+    document_id = models.ForeignKey(Document, on_delete=models.RESTRICT)
+    feed_id = models.ForeignKey(Feed, on_delete=models.RESTRICT)
+
+    def __str__(self):
+        return f"document_id: {self.document_id}, feed_id: {self.feed_id}"
 
 
-class Document_users(models.Model):
-    user_id = models.ForeignKey(Users, on_delete=models.RESTRICT)
-    document_id = models.ForeignKey(Documents, on_delete=models.RESTRICT)
+class Document_user(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.RESTRICT)
+    document_id = models.ForeignKey(Document, on_delete=models.RESTRICT)
     is_accepted = models.BooleanField()
+
+    def __str__(self):
+        return f"document_id: {self.document_id}, user_id: {self.user_id}"
 
 
