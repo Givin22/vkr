@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_messages %}
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Main content -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>
