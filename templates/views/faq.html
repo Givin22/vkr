@@ -4,14 +4,21 @@
 
 {% block content %}
 
-    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 bg-dark">
-        <div class="sidebar">
-            {% include 'sidebar.html' %}
-        </div>
-    </div>
 
+{% include 'sidebar.html' %}
+
+<div style="display: flex; flex-direction: column;">
     <div class="col py-3">
         <h1>FAQ и Информация</h1>
+        <p>Воспитатель: Кирова О.Н. кабинет 116б</p>
     </div>
 
+    {% if user.is_admin %}
+        <div>
+            <button class="btn btn-primary">Изменить описание FAQ</button>
+        </div>
+    {% endif %}
+</div>
+
 {% endblock %}
+

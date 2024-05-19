@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Моя страница{% endblock %}
 
 {% block content %}
 
-    <div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 bg-dark">
-        <div class="sidebar">
-            {% include 'sidebar.html' %}
-        </div>
-    </div>
+
+    {% include 'sidebar.html' %}
+
 
     <!-- Main content -->
     <div class="col py-3">
@@ -16,7 +14,7 @@
             Hi {{ user.username }}!
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit">Log Out</button>
+                <button type="submit" class="btn btn-danger">Log Out</button>
             </form>
         {% else %}
             <p>You are not logged in</p>

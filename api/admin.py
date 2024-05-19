@@ -18,16 +18,24 @@ from api.models import (
 class UserAdmin(DjangoUserAdmin):
     model = User
     list_display = ["email", "username"]
-    add_fieldsets = DjangoUserAdmin.add_fieldsets + (
-        (
-            None,
-            {"fields": ["email", "is_admin", "room_id"]}
-        ),
+    fieldsets = DjangoUserAdmin.fieldsets + (
+        ('Доп инфа о пользователе', {'fields': ("is_admin", "room_id")}),
     )
-
-
-class ProfilesAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name"]
+    add_fieldsets = DjangoUserAdmin.add_fieldsets + (
+        ('Дополнительая KEKE информация', {'fields': ("is_admin", "room_id")}),
+    )
+    # fieldsets = DjangoUserAdmin.fieldsets + (
+    #     (
+    #         None,
+    #         {"fields": ["email", "is_admin", "room_id"]}
+    #     )
+    # )
+    # add_fieldsets = DjangoUserAdmin.add_fieldsets + (
+    #     (
+    #         None,
+    #         {"fields": ["email", "is_admin", "room_id"]}
+    #     ),
+    # )
 
 
 class User_typesAdmin(admin.ModelAdmin):
