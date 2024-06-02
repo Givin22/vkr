@@ -1,99 +1,189 @@
-<div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 bg-primary">
-    <div class="sidebar">
-        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-            <a href={% url "home" %} class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white
-               text-decoration-none">
+<button class="show-sidebar">
+    &#9776;
+</button>
+<nav class="sidebar bg-primary">
+    <div class="sidebar__header">
+        <span class="sidebar__title">
+            Общежитие {# TODO connect to DB #}
+        </span>
+        <button class="sidebar__close">
+            &#10006;
+        </button>
+    </div>
 
-            <span class="fs-5 d-none d-sm-inline">{{ user.last_name }} {{ user.first_name }} {{ user.room_id.number }}</span>
-            </a>
-            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                <li class="nav-item">
-                    <a href={% url "home" %} class="nav-link align-middle px-0">
-                    <i class="fs-4 bi-house"></i>
-                    <button class="ms-1 d-none d-sm-inline btn btn-info">Моя страница</button>
-                    </a>
-                </li>
-                <li>
-                    <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fs-4 bi-speedometer2"></i>
-                        <button class="ms-1 d-none d-sm-inline text-dark btn btn-info">Тестовая кнопка 1</button>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link px-0 align-middle">
-                        <i class="fs-4 bi-table"></i>
-                        <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 2</button>
-                    </a>
-                </li>
-                <li>
-                    <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                        <i class="fs-4 bi-bootstrap"></i>
-                        <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 3</button>
-                    </a>
-                    <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                        <li class="w-100">
-                            <a href="#" class="nav-link px-0 text-dark">
-                                <button class="d-none d-sm-inline btn btn-info">Item1</button>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0 text-dark">
-                                <button class="d-none d-sm-inline btn btn-info">Item 2</button>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                        <i class="fs-4 bi-grid"></i>
-                        <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 4</button>
-                    </a>
-                    <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
-                        <li class="w-100">
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
-                        </li>
-                        <li>
-                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href={% url 'faq' %} class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi-people"></i>
-                    <button class="ms-1 d-none d-sm-inline btn btn-info text-dark">Информация</button>
-                    </a>
-                </li>
-            </ul>
-            <hr>
-            <div class="dropdown pb-4">
-                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://motif-blog-assets.motifphotos.com/motif-blog/wp-content/uploads/2018/12/iStock-902506410_1200x800px-1200x800.jpg?x98050"
-                         alt="hugenerd" width="30" height="30" class="rounded-circle">
-                    <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                    {#            <li><a class="dropdown-item" href="#">New project...</a></li>#}
-                    {#            <li><a class="dropdown-item" href="#">Settings</a></li>#}
-                    {#            <li><a class="dropdown-item" href="#">Profile</a></li>#}
-                    {#            <li>#}
-                    {#                <hr class="dropdown-divider">#}
-                    {#            </li>#}
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <li>
-                            <button type="submit" class="dropdown-item">Выйти</button>
-                        </li>
-                    </form>
-
-                </ul>
+    <div class="sidebar__main">
+        <div class="sidebar__user">
+            <img class="sidebar__user-img" src="https://cdn-icons-png.flaticon.com/512/149/149452.png"
+                 alt="Аватарка юзера"> {# TODO change img #}
+            <div class="sidebar__user-info">
+                <span class="sidebar__user-name">
+                    {{ user.first_name }} {{ user.last_name }}
+                    {# TODO connect to DB #}
+                </span>
+                <span class="sidebar__user-job">
+                    {{ user.user_type_id }}
+                </span>
             </div>
         </div>
+        <ul class="sidebar__list">
+            Общежите
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                    Новости
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                    Культмассовый сектор
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                    Бытовой сектор
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                    Документы
+                </a>
+            </li>
+        </ul>
+        <ul class="sidebar__list">
+            Моя секция
+            <li class="sidebar__item bg-primary-subtle">
+                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                    Моя Страница
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href={% url "duty_list" %}> {# TODO add href #}
+                    Лист дежурства
+                </a>
+            </li>
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                    Лист проживающих
+                </a>
+            </li>
+        </ul>
     </div>
-</div>
+    <div class="sidebar__links">
+        <a href={% url "faq" %}>FAQ</a>
+    </div>
+</nav>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.querySelector('.sidebar');
+        const showSidebar = document.querySelector('.show-sidebar');
+        const closeSidebar = document.querySelector('.sidebar__close');
+        {#const mainContent = document.querySelector('.main-content');#}
+        {# TODO #}
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('sidebar_open');
+            showSidebar.classList.toggle('show-sidebar_hide');
+            {#mainContent.classList.toggle('main-content_shifted');#}
+            {# TODO #}
+        }
+
+        showSidebar.addEventListener('click', toggleSidebar);
+        closeSidebar.addEventListener('click', toggleSidebar);
+        {#mainContent.addEventListener('click', toggleSidebar)#}
+        {# TODO #}
+    })
+
+</script>
+
+
+{#<div class="col-auto col-md-2 col-xl-2 px-sm-2 px-0 bg-primary">#}
+{#    <div class="sidebar">#}
+{#        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">#}
+{#            <a href={% url "home" %} class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white#}
+{#               text-decoration-none"#}
+{#            <span class="fs-5 d-none d-sm-inline">{{ user.last_name }} {{ user.first_name }} {{ user.room_id.number }}</span>#}
+{#            </a>#}
+{#            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">#}
+{#                <li class="nav-item">#}
+{#                    <a href={% url "home" %} class="nav-link align-middle px-0">#}
+{#                    <i class="fs-4 bi-house"></i>#}
+{#                    <button class="ms-1 d-none d-sm-inline btn btn-info">Моя страница</button>#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="nav-item">#}
+{#                    <a href={% url "duty_list" %} class="nav-link px-0 align-middle">#}
+{#                        <i class="fs-4 bi-speedometer2">what's the i??</i>#}
+{#                        <button class="ms-1 d-none d-sm-inline text-dark btn btn-info">Лист дежурств</button>#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#" class="nav-link px-0 align-middle">#}
+{#                        <i class="fs-4 bi-table"></i>#}
+{#                        <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 2</button>#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">#}
+{#                        <i class="fs-4 bi-bootstrap"></i>#}
+{#                        <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 3</button>#}
+{#                    </a>#}
+{#                    <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">#}
+{#                        <li class="w-100">#}
+{#                            <a href="#" class="nav-link px-0 text-dark">#}
+{#                                <button class="d-none d-sm-inline btn btn-info">Item1</button>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#" class="nav-link px-0 text-dark">#}
+{#                                <button class="d-none d-sm-inline btn btn-info">Item 2</button>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">#}
+{#                        <i class="fs-4 bi-grid"></i>#}
+{#                        <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 4</button>#}
+{#                    </a>#}
+{#                    <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">#}
+{#                        <li class="w-100">#}
+{#                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>#}
+{#                        </li>#}
+{#                        <li>#}
+{#                            <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href={% url 'faq' %} class="nav-link px-0 align-middle">#}
+{#                    <i class="fs-4 bi-people"></i>#}
+{#                    <button class="ms-1 d-none d-sm-inline btn btn-info text-dark">Информация</button>#}
+{#                    </a>#}
+{#                </li>#}
+{#            </ul>#}
+{#            <hr>#}
+{#            <div class="dropdown pb-4">#}
+{#                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"#}
+{#                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                    <img src="https://motif-blog-assets.motifphotos.com/motif-blog/wp-content/uploads/2018/12/iStock-902506410_1200x800px-1200x800.jpg?x98050"#}
+{#                         alt="hugenerd" width="30" height="30" class="rounded-circle">#}
+{#                    <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>#}
+{#                </a>#}
+{#                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">#}
+{#                    <form action="{% url 'logout' %}" method="post">#}
+{#                        {% csrf_token %}#}
+{#                        <li>#}
+{#                            <button type="submit" class="dropdown-item">Выйти</button>#}
+{#                        </li>#}
+{#                    </form>#}
+{##}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}

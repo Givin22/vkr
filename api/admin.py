@@ -17,25 +17,19 @@ from api.models import (
 
 class UserAdmin(DjangoUserAdmin):
     model = User
-    list_display = ["email", "username"]
+    list_display = ["first_name", "last_name", "room_id", "user_type_id", "email", "phone_number", "is_admin"]
     fieldsets = DjangoUserAdmin.fieldsets + (
-        ('Доп инфа о пользователе', {'fields': ("is_admin", "room_id")}),
+        (
+            'Доп инфа о пользователя (изменение)',
+            {'fields': ("room_id", "user_type_id", "phone_number", "is_admin", )}
+        ),
     )
     add_fieldsets = DjangoUserAdmin.add_fieldsets + (
-        ('Дополнительая KEKE информация', {'fields': ("is_admin", "room_id")}),
+        (
+            'Доп инфа о пользователя (создание)',
+            {'fields': ("first_name", "last_name", "room_id", "user_type_id", "email", "phone_number", "is_admin")}
+        ),
     )
-    # fieldsets = DjangoUserAdmin.fieldsets + (
-    #     (
-    #         None,
-    #         {"fields": ["email", "is_admin", "room_id"]}
-    #     )
-    # )
-    # add_fieldsets = DjangoUserAdmin.add_fieldsets + (
-    #     (
-    #         None,
-    #         {"fields": ["email", "is_admin", "room_id"]}
-    #     ),
-    # )
 
 
 class User_typesAdmin(admin.ModelAdmin):
@@ -48,6 +42,7 @@ class BuildingsAdmin(admin.ModelAdmin):
 
 class RoomsAdmin(admin.ModelAdmin):
     list_display = ["number", "building_id"]
+
 
 
 admin.site.register(User, UserAdmin)

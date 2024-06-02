@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 
+from api import class_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("django.contrib.auth.urls")),
-    path('', TemplateView.as_view(template_name="views/home.html"), name="home"),
+    path('', class_views.Home.as_view(), name="root_home"),
+    path('home/', class_views.Home.as_view(), name='home'),
     path('faq/', TemplateView.as_view(template_name="views/faq.html"), name="faq"),
+    path('duty_list', class_views.DutyList.as_view(), name='duty_list')
 ]

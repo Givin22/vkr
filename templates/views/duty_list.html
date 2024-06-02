@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Лист дежурств секции XXX{% endblock %}
+
+{% block javascript %}
+    {% load static %}
+    <script src="{% static 'js/duty_table.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+    {% include 'sidebar.html' %}
+
+
+
+    <div class="col py-3 xp-3 main-content">
+        <div class="col py-3 xp-3">
+            <h1>Лист дежурств по секции</h1>
+            {{ info }}
+        </div>
+
+
+        {% include 'table_for_duty_list.html' %}
+
+
+        <div>
+            <h2>Староста: {{ elder }}</h2>
+            <h2>Заместитель: {{ assistant_elder }}</h2>
+        </div>
+    </div>
+
+{% endblock %}
+

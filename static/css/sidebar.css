@@ -1,0 +1,145 @@
+html,
+body,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+body {
+    --sidebar-color: white;
+    --sidebar-back: rgb(133, 133, 255);
+    --btn-back: #333;
+    --sidebar-item: aqua;
+    --sidebar-item-hover: blue;
+}
+
+/* Общие стили выше */
+
+.show-sidebar {
+    position: fixed;
+    font-size: 20px;
+    z-index: 2;
+    padding: 5px 10px;
+    width: 100px;
+    top: 10px;
+    background-color: var(--btn-back);
+    color: var(--sidebar-color);
+    border-radius: 0 5px 5px 0;
+    transition: transform 0.4s;
+}
+
+.show-sidebar_hide {
+    transform: translateX(-100px);
+}
+
+
+.sidebar {
+    width: 256px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 5px;
+    height: 100vh;
+    background-color: var(--sidebar-back);
+    color: var(--sidebar-color);
+    position: fixed;
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
+    z-index: 3;
+    transform: translateX(-265px);
+    transition: transform 0.4s;
+    will-change: transform;
+}
+
+.sidebar_open {
+    transform: translateX(0);
+}
+
+.sidebar__main {
+    flex: 3 0 auto;
+    margin-top: 40px;
+}
+
+.sidebar__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar__title {
+    font-size: 24px;
+}
+
+.sidebar__close {
+    background-color: var(--btn-back);
+    color: var(--sidebar-color);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+
+}
+
+.sidebar__Links {
+    flex: 0 1 50px;
+}
+
+.sidebar__user {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.sidebar__user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sidebar__user-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.sidebar__list {
+    padding: 5px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sidebar__item {
+    background-color: var(--sidebar-item);
+    transition: background-color 0.3s;
+    border-radius: 4px;
+}
+
+.sidebar__item:hover {
+    background-color: var(--sidebar-item-hover);
+}
+
+.sidebar__item-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 5px 10px;
+}
+
+.sidebar__links {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sidebar__links a {
+    color: inherit;
+}
+

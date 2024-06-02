@@ -1,0 +1,97 @@
+<div class="table-responsive duty_table">
+    <table id="duty-table" class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
+        <thead class="thead-fixed">
+        <tr>
+            <th>Месяц</th>
+            {% for room in rooms %}
+                <th>{{ room }}</th>
+            {% endfor %}
+        </tr>
+
+        <tbody>
+        <form id="duty_list_form" method="post">
+            {% for day in days %}
+                <tr>
+                    <td>
+                        {{ day }}
+                    </td>
+                    {% csrf_token %}
+                    {% for room in rooms %}
+                        <td>
+                            {# checked disabled #}
+
+                            <input type="checkbox" class="btn-check full-cell" id="{{ day }}{{ room }}"
+                                   name="{{ day }}-{{ room }}"
+                                   autocomplete="off" {% if user.user_type_id == 3 %} disabled {% endif %}>
+                            <label class="btn btn-outline-primary"
+                                   for="{{ day }}{{ room }}">✓</label>
+
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Сохранить таблицу</button>
+        </form>
+        </tbody>
+
+    </table>
+
+</div>
+
+
+{#<table id="duty-table" class="table table-dark table-borderless">#}
+{#  <thead>#}
+{#    <tr>#}
+{#      <th></th>#}
+{#      <th>Комната 1</th>#}
+{#      <th>Комната 2</th>#}
+{#      <th>Комната 3</th>#}
+{#    </tr>#}
+{#  </thead>#}
+{#  <tbody>#}
+{#    <tr>#}
+{#      <td>1</td>#}
+{#      <td class="duty-cell" style="background-color: green;"></td>#}
+{#      <td class="duty-cell"></td>#}
+{#      <td class="duty-cell" style="background-color: green;"></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#      <td>2</td>#}
+{#      <td class="duty-cell"></td>#}
+{#      <td class="duty-cell" style="background-color: green;"></td>#}
+{#      <td class="duty-cell"></td>#}
+{#    </tr>#}
+{#    <!-- Добавьте остальные дни месяца и дежурства для каждой комнаты -->#}
+{#  </tbody>#}
+{#</table>#}
+
+
+{#<table class="table table-striped table-bordered">#}
+{#    <thead>#}
+{#    <tr>#}
+{#        <th scope="col">#</th>#}
+{#        <th scope="col">First</th>#}
+{#        <th scope="col">Last</th>#}
+{#        <th scope="col">Handle</th>#}
+{#    </tr>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    <tr>#}
+{#        <th scope="row">1</th>#}
+{#        <td>Mark</td>#}
+{#        <td>Otto</td>#}
+{#        <td>@mdo</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <th scope="row">2</th>#}
+{#        <td>Jacob</td>#}
+{#        <td>Thornton</td>#}
+{#        <td>@fat</td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <th scope="row">3</th>#}
+{#        <td colspan="2">Larry the Bird</td>#}
+{#        <td>@twitter</td>#}
+{#    </tr>#}
+{#    </tbody>#}
+{#</table>#}

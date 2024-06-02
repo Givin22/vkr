@@ -5,21 +5,37 @@
 {% block content %}
 
 
+    <div class="col py-3 xp-3 main-content">
+        <div>
+            <h1>Новости</h1>
+            <h2>Староста: {{ elder }}</h2>
+            <h2>Заместитель: {{ assistant_elder }}</h2>
+        </div>
+
+
+        <div class="col py-3">
+            <div>
+                Главные новости секции и общежития
+            </div>
+        </div>
+
+    </div>
+
     {% include 'sidebar.html' %}
 
-
     <!-- Main content -->
-    <div class="col py-3">
-        {% if user.is_authenticated %}
-            Hi {{ user.username }}!
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Log Out</button>
-            </form>
-        {% else %}
-            <p>You are not logged in</p>
-            <a href="{% url 'login' %}">Log In</a>
-        {% endif %}
-    </div>
+    {#    <div class="col py-3">#}
+    {#        {% if user.is_authenticated %}#}
+    {#            Hi {{ user.username }}!#}
+    {#            <form action="{% url 'logout' %}" method="post">#}
+    {#                {% csrf_token %}#}
+    {#                <button type="submit" class="btn btn-danger">Log Out</button>#}
+    {#            </form>#}
+    {#        {% else %}#}
+    {#            <p>You are not logged in</p>#}
+    {#            <a href="{% url 'login' %}">Log In</a>#}
+    {#        {% endif %}#}
+    {##}
+    {#    </div>#}
 
 {% endblock %}

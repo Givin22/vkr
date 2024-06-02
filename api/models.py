@@ -24,7 +24,7 @@ class Room(models.Model):
     section = models.SmallIntegerField()
 
     def __str__(self):
-        return f"{self.floor}.{self.section}.{self.number} | {self.capacity}"
+        return f"{self.number} {self.floor}.{self.section} | {self.capacity}"
 
 
 class User(AbstractUser):
