@@ -1,0 +1,55 @@
+<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+    <a href={% url "home" %} class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <span class="fs-5 d-none d-sm-inline">{{ user.last_name }} {{ user.first_name }}</span>
+    </a>
+    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        <li class="nav-item">
+            <a href={% url "home" %} class="nav-link align-middle px-0">
+            <i class="fs-4 bi-house"></i>
+            <button class="ms-1 d-none d-sm-inline btn btn-info">Моя страница</button>
+            </a>
+        </li>
+        <li>
+            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-speedometer2"></i>
+                <button class="ms-1 d-none d-sm-inline text-dark btn btn-info">Тестовая кнопка 1</button>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-table"></i> <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 2</button></a>
+        </li>
+        <li>
+            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                <i class="fs-4 bi-bootstrap"></i> <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 3</button></a>
+        </li>
+        <li>
+            <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-grid"></i> <button class="ms-1 d-none d-sm-inline btn btn-info">Тестовая кнопка 4</button> </a>
+        </li>
+        <li>
+            <a href={% url 'faq' %} class="nav-link px-0 align-middle">
+            <i class="fs-4 bi-people"></i>
+            <button class="ms-1 d-none d-sm-inline btn btn-info text-dark">Информация</button>
+            </a>
+        </li>
+    </ul>
+    <hr>
+    <div class="dropdown pb-4">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://motif-blog-assets.motifphotos.com/motif-blog/wp-content/uploads/2018/12/iStock-902506410_1200x800px-1200x800.jpg?x98050"
+                 alt="hugenerd" width="30" height="30" class="rounded-circle">
+            <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <li>
+                    <button type="submit" class="dropdown-item">Выйти</button>
+                </li>
+            </form>
+
+        </ul>
+    </div>
+</div>

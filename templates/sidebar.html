@@ -13,8 +13,8 @@
 
     <div class="sidebar__main">
         <div class="sidebar__user">
-            <img class="sidebar__user-img" src="https://cdn-icons-png.flaticon.com/512/149/149452.png"
-                 alt="Аватарка юзера"> {# TODO change img #}
+{#            <img class="sidebar__user-img" src="https://cdn-icons-png.flaticon.com/512/149/149452.png"#}
+{#                 alt="Аватарка юзера"> {# TODO change img #}
             <div class="sidebar__user-info">
                 <span class="sidebar__user-name">
                     {{ user.first_name }} {{ user.last_name }}
@@ -50,8 +50,8 @@
         </ul>
         <ul class="sidebar__list">
             Моя секция
-            <li class="sidebar__item bg-primary-subtle">
-                <a class="sidebar__item-link" href=""> {# TODO add href #}
+            <li class="sidebar__item">
+                <a class="sidebar__item-link" href={% url "home" %}> {# TODO add href #}
                     Моя Страница
                 </a>
             </li>
@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li class="sidebar__item">
-                <a class="sidebar__item-link" href=""> {# TODO add href #}
+                <a class="sidebar__item-link" href={% url "residents" %}> {# TODO add href #}
                     Лист проживающих
                 </a>
             </li>
@@ -69,6 +69,24 @@
     </div>
     <div class="sidebar__links">
         <a href={% url "faq" %}>FAQ</a>
+    </div>
+    <hr>
+    <div class="dropdown pb-4">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://motif-blog-assets.motifphotos.com/motif-blog/wp-content/uploads/2018/12/iStock-902506410_1200x800px-1200x800.jpg?x98050"
+                 alt="hugenerd" width="30" height="30" class="rounded-circle">
+            <span class="d-none d-sm-inline mx-1">{{ user.username }}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <li>
+                    <button type="submit" class="dropdown-item">Выйти</button>
+                </li>
+            </form>
+
+        </ul>
     </div>
 </nav>
 <script>

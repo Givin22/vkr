@@ -1,0 +1,32 @@
+<div class="table-responsive residents_table">
+    <br><br>
+    <table id="residents-table"
+           class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
+        <tbody>
+
+        <tr>
+            {% for room in rooms %}
+                <td>
+                    {{ room }}
+                </td>
+                {% for users_rooms, users_info_list in result.items %}
+                    {% for users_info in users_info_list %}
+
+                        {% if users_rooms == room %}
+                            <td>
+                                <span> {% for user_info in users_info %} {{ user_info }} {% endfor %} </span>
+                            </td>
+                        {% endif %}
+
+                        {% for _ in {{ places_in_room }} %}
+                            <td>
+                                <span style="color: gray">не назначено</span>
+                            </td>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
