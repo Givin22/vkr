@@ -65,10 +65,28 @@ def get_all_users_by_section(request):
     users = list(User.objects.filter(
         Q(room_id__floor=current_user_floor) &
         Q(room_id__section=current_user_section)
-    ).all().values("first_name", "last_name", "room_id__number", "user_type_id__type", "room_id__capacity"))
+    ).all().values("first_name", "last_name", "room_id__number", "user_type_id__type"))
 
     users.sort(key=lambda x: x['room_id__number'])
 
-    print(users)
-
     return {"get_all_users_by_section": users}
+
+
+def get_rooms_capacity_by_user(request):
+    current_user = request.user
+    current_user_floor = current_user.room_id.floor
+    current_user_section = current_user.room_id.section
+
+    rooms_capacity = list(Room.objects.filter(
+        Q(floor=current_user_floor) &
+        Q(section=current_user_section)
+    ).all().values("number", "capacity"))
+
+    rooms_capacity.sort(key=lambda x: x['number'])
+
+    rooms_capacity = [
+        {'number': room.get("number"), 'capacity': room['capacity']}
+        for room in rooms_capacity
+    ]
+
+    return {"get_rooms_capacity_by_user": rooms_capacity}

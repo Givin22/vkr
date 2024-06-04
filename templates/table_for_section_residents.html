@@ -1,32 +1,41 @@
 <div class="table-responsive residents_table">
-    <br><br>
     <table id="residents-table"
            class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
         <tbody>
-
-        <tr>
-            {% for room in rooms %}
+        {% for room in rooms %}
+            <tr>
                 <td>
                     {{ room }}
                 </td>
-                {% for users_rooms, users_info_list in result.items %}
-                    {% for users_info in users_info_list %}
 
-                        {% if users_rooms == room %}
+                {% for room_section, user_of_room in residents.items %}
+                    {% if room_section == room  %}
+                        {% for user in user_of_room %}
                             <td>
-                                <span> {% for user_info in users_info %} {{ user_info }} {% endfor %} </span>
-                            </td>
-                        {% endif %}
-
-                        {% for _ in {{ places_in_room }} %}
-                            <td>
-                                <span style="color: gray">не назначено</span>
+                                {{ user }}
                             </td>
                         {% endfor %}
-                    {% endfor %}
+                    {% endif %}
                 {% endfor %}
-                </tr>
-            {% endfor %}
+
+                {% for emtpy_room_section in empty_place_in_room %}
+                    {% if emtpy_room_section.number == room %}
+                        {% for cell in emtpy_room_section.capacity %}
+                            <td style="color: lightslategray">
+                                свободно
+                            </td>
+                        {% endfor %}
+
+                        {% for cell in emtpy_room_section.no_room %}
+                            <td style="color: dimgray">
+                                нет места
+                            </td>
+                        {% endfor %}
+                    {% endif %}
+
+                {% endfor %}
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>
