@@ -1,5 +1,6 @@
+{# ✓ #}
 <div class="table-responsive duty_table">
-    {#    {{ duty_info }}#}
+    {{ duty_info }}
     {% for room_duty, day_duty_list in duty_info.items %}
         {{ room_duty }}
         {{ day_duty_list }}
@@ -15,35 +16,53 @@
 
         <tbody>
         <form id="duty_list_form" method="post">
+            {% csrf_token %}
             {% for day in days %}
                 <tr>
                     <td>
                         {{ day }}
                     </td>
-                    {% csrf_token %}
+
                     {% for room in rooms %}
                         <td>
-                            {# checked disabled #}
+                            {% if not duty_info %}
 
-                            <input type="checkbox" class="btn-check full-cell" name="{{ day }}-{{ room }}"
-                                    autocomplete="off"
-                                    {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
-                                    disabled
-                                    {% endif %}
-
-                            {% for room_duty, day_duty_list in duty_info.items %}
-                                {% if room_duty == room %}
-                                    <span>{{ room_duty }}-|-{{ room }}</span>
-                                    {% for day_duty in day_duty_list %}
-                                        {% if day_duty == day %}
-                                            checked
+                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
+                                       name="{{ day }}-{{ room }}" autocomplete="off"
+                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
+                                       disabled
                                         {% endif %}
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                            >
-                            <label class="btn btn-outline-primary"
-                                   for="{{ day }}{{ room }}">✓</label>
+                                >
+                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
+                            {% else %}
+
+                                {% for room_duty, day_duty_list in duty_info.items %}
+                                    {% if room_duty == room %}
+                                        {% for day_duty in day_duty_list %}
+                                            {% if day_duty == day %}
+                                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
+                                                       name="{{ day }}-{{ room }}" autocomplete="off"
+                                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
+                                                       disabled
+                                                        {% endif %}
+                                                       checked
+                                                >
+                                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
+                                            {% else %}
+                                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
+                                                       name="{{ day }}-{{ room }}" autocomplete="off"
+                                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
+                                                       disabled
+                                                        {% endif %}
+                                                >
+                                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+
+
+                            {% endif %}
 
                         </td>
                     {% endfor %}
@@ -54,7 +73,6 @@
         </tbody>
 
     </table>
-
 </div>
 
 

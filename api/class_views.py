@@ -19,6 +19,7 @@ class DutyList(View):
 
         elder_and_assist = util.get_section_elder(request)
         get_room = util.get_rooms_by_user(request)
+        # days = {"days": list(range(1, 32))} #  31 дня
         days = {
             "days": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
                      28, 29, 30, 31]
@@ -50,12 +51,11 @@ class DutyList(View):
         for day_and_room in server_answer:
             day_and_room = day_and_room.split("-")  # day-room (1-603)
             day = day_and_room[0]
-            room = day_and_room[1]
+            room = int(day_and_room[1])
             if room not in duty.keys():
                 duty.update({room: []})
-            duty[room].append(day)
+            duty[room].append(int(day))
 
-            # duty.update({"day": day_and_room[0], "room": day_and_room[1]})
         context.update({"duty_info": duty})
 
         return render(request, 'views/duty_list.html', context)
