@@ -1,10 +1,12 @@
 {# ✓ #}
 <div class="table-responsive duty_table">
     {{ duty_info }}
+<br>
     {% for room_duty, day_duty_list in duty_info.items %}
         {{ room_duty }}
         {{ day_duty_list }}
     {% endfor %}
+<br>
     <table id="duty-table" class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
         <thead class="thead-fixed">
         <tr>
@@ -38,26 +40,45 @@
 
                                 {% for room_duty, day_duty_list in duty_info.items %}
                                     {% if room_duty == room %}
-                                        {% for day_duty in day_duty_list %}
-                                            {% if day_duty == day %}
-                                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
-                                                       name="{{ day }}-{{ room }}" autocomplete="off"
-                                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
-                                                       disabled
-                                                        {% endif %}
-                                                       checked
-                                                >
-                                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
-                                            {% else %}
-                                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
-                                                       name="{{ day }}-{{ room }}" autocomplete="off"
-                                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
-                                                       disabled
-                                                        {% endif %}
-                                                >
-                                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
-                                            {% endif %}
-                                        {% endfor %}
+                                        {% if day in day_duty_list %}
+                                            <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
+                                                   name="{{ day }}-{{ room }}" autocomplete="off"
+                                                    {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
+                                                   disabled
+                                                    {% endif %}
+                                                   checked
+                                            >
+                                            <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
+                                        {% else %}
+                                            <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
+                                                   name="{{ day }}-{{ room }}" autocomplete="off"
+                                                    {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
+                                                   disabled
+                                                    {% endif %}
+                                            >
+                                            <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
+                                        {% endif %}
+{#                                        {% for day_duty in day_duty_list %}#}
+{#                                            {% if day_duty == day %}#}
+{#                                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"#}
+{#                                                       name="{{ day }}-{{ room }}" autocomplete="off"#}
+{#                                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}#}
+{#                                                       disabled#}
+{#                                                        {% endif %}#}
+{#                                                       checked#}
+{#                                                >#}
+{#                                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>#}
+{##}
+{#                                            {% else %}#}
+{#                                                <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"#}
+{#                                                       name="{{ day }}-{{ room }}" autocomplete="off"#}
+{#                                                        {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}#}
+{#                                                       disabled#}
+{#                                                        {% endif %}#}
+{#                                                >#}
+{#                                                <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>#}
+{#                                            {% endif %}#}
+{#                                        {% endfor %}#}
                                     {% endif %}
                                 {% endfor %}
 

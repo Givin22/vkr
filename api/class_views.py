@@ -46,15 +46,20 @@ class DutyList(View):
         context.update(days)
 
         duty = {}
+        for room_i in get_room.get("rooms"):
+            duty.update({room_i: []})
+        # print(duty)
+
         server_answer = dict(request.POST)
         server_answer.pop("csrfmiddlewaretoken")  # Delete crsf token
         for day_and_room in server_answer:
             day_and_room = day_and_room.split("-")  # day-room (1-603)
             day = day_and_room[0]
-            room = int(day_and_room[1])
-            if room not in duty.keys():
-                duty.update({room: []})
-            duty[room].append(int(day))
+            room = day_and_room[1]
+
+            # if room not in duty.keys():
+            #     duty.update({room: []})
+            duty[int(room)].append(int(day))
 
         context.update({"duty_info": duty})
 

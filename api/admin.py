@@ -15,6 +15,7 @@ from api.models import (
 )
 
 
+# TODO add "study_group"
 class UserAdmin(DjangoUserAdmin):
     model = User
     list_display = ["first_name", "last_name", "room_id", "user_type_id", "email", "phone_number", "is_admin"]
