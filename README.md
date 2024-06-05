@@ -1,3 +1,7 @@
-pee-pee
+docker-compose run django python manage.py createsuperuser
 
-poo-poo
+poetry run python manage.py createsuperuser
+
+docker build -t vkr-django --no-cashe .
+
+docker-compose up [down]

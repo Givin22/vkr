@@ -31,13 +31,32 @@ class DutyList(View):
         return render(request, 'views/duty_list.html', context)
 
     def post(self, request):
-        mass = []
-        for i in request.POST.items():
-            mass.append(i)
-        # for key, value in request.POST.items():
-        #     test = {key: value}
-        #     mass.append(test)
-        context = {"info": mass}
+        # TODO extract from 'post' and 'get' requests: context, days, elder_and_assist, get_room and context updates
+        context = {}
+
+        days = {
+            "days": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+                     28, 29, 30, 31]
+        }
+        elder_and_assist = util.get_section_elder(request)
+        get_room = util.get_rooms_by_user(request)
+        context.update(elder_and_assist)
+        context.update(get_room)
+        context.update(days)
+
+        duty = {}
+        server_answer = dict(request.POST)
+        server_answer.pop("csrfmiddlewaretoken")  # Delete crsf token
+        for day_and_room in server_answer:
+            day_and_room = day_and_room.split("-")  # day-room (1-603)
+            day = day_and_room[0]
+            room = day_and_room[1]
+            if room not in duty.keys():
+                duty.update({room: []})
+            duty[room].append(day)
+
+            # duty.update({"day": day_and_room[0], "room": day_and_room[1]})
+        context.update({"duty_info": duty})
 
         return render(request, 'views/duty_list.html', context)
 
@@ -55,20 +74,20 @@ class ResidentsList(View):
 
         temp_dict_for_users = {}
 
-        #   Code below make form like: {"607": [[first_name], [last_name]], "608": [[first_name], [last_name]] ...}
+        #   Code below make form like: {"607": [first_last_name1, first_last_name2], ...}
         for user in users.get("get_all_users_by_section"):
             if not user.get("room_id__number") in temp_dict_for_users:
                 temp_dict = {
                     user.get("room_id__number"): [
 
-                            f'{user.get("first_name")} {user.get("last_name")}, {user.get("user_type_id__type")}'
+                        f'{user.get("first_name")} {user.get("last_name")}, {user.get("user_type_id__type")}'
 
                     ]
                 }
                 temp_dict_for_users.update(temp_dict)
             else:
                 temp_dict_for_users[user.get("room_id__number")].append(
-                        f'{user.get("first_name")} {user.get("last_name")}, {user.get("user_type_id__type")}'
+                    f'{user.get("first_name")} {user.get("last_name")}, {user.get("user_type_id__type")}'
                 )
 
         residents = {"residents": temp_dict_for_users}
@@ -85,7 +104,8 @@ class ResidentsList(View):
         for room in get_rooms_capacity_by_user:
             temp = room['capacity']
             room['capacity'] -= num_occupied_places_in_rooms.get(room['number'], 0)
-            temp = {'number': room['number'], 'capacity': list(range(room['capacity'])), 'no_room': list(range(5 - num_occupied_places_in_rooms.get(room['number'], 0) - room['capacity']))}
+            temp = {'number': room['number'], 'capacity': list(range(room['capacity'])),
+                    'no_room': list(range(5 - num_occupied_places_in_rooms.get(room['number'], 0) - room['capacity']))}
             empty_place_in_room.append(temp)
 
         empty_place_in_room = {"empty_place_in_room": empty_place_in_room}

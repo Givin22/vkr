@@ -1,8 +1,13 @@
 <div class="table-responsive duty_table">
+    {#    {{ duty_info }}#}
+    {% for room_duty, day_duty_list in duty_info.items %}
+        {{ room_duty }}
+        {{ day_duty_list }}
+    {% endfor %}
     <table id="duty-table" class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
         <thead class="thead-fixed">
         <tr>
-            <th>Комната</th>
+            <th>Комната\День</th>
             {% for room in rooms %}
                 <th>{{ room }}</th>
             {% endfor %}
@@ -20,9 +25,23 @@
                         <td>
                             {# checked disabled #}
 
-                            <input type="checkbox" class="btn-check full-cell" id="{{ day }}{{ room }}"
-                                   name="{{ day }}-{{ room }}"
-                                   autocomplete="off" {% if user.user_type_id == 3 %} disabled {% endif %}>
+                            <input type="checkbox" class="btn-check full-cell" name="{{ day }}-{{ room }}"
+                                    autocomplete="off"
+                                    {% if user.user_type_id.type != "Староста" and user.user_type_id.type != "ЗамСтаросты" %}
+                                    disabled
+                                    {% endif %}
+
+                            {% for room_duty, day_duty_list in duty_info.items %}
+                                {% if room_duty == room %}
+                                    <span>{{ room_duty }}-|-{{ room }}</span>
+                                    {% for day_duty in day_duty_list %}
+                                        {% if day_duty == day %}
+                                            checked
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                            >
                             <label class="btn btn-outline-primary"
                                    for="{{ day }}{{ room }}">✓</label>
 

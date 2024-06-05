@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User_type(models.Model):
-    type = models.CharField(max_length=50) # on default set "settler"?
+    type = models.CharField(max_length=50)  # on default set "settler"?
 
     def __str__(self):
         return self.type
