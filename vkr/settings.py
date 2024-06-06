@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%qcx9&=le*(ha-p5*u5qjh_1)_4qxw8-m#186l!oshjufi4mtf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -84,6 +84,7 @@ DATABASES = {
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "pgdb",
+        # "HOST": "127.0.0.1",
         "PORT": "5432",
     }
 }
@@ -123,6 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_ROOT = '/static/'
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static/'

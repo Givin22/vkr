@@ -31,7 +31,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=255, unique=True)
     user_type_id = models.ForeignKey(User_type, on_delete=models.RESTRICT, null=True)
     room_id = models.ForeignKey(Room, on_delete=models.RESTRICT, null=True)
-    # study_group = models.CharField(max_length=50, null=True)
+    study_group = models.CharField(max_length=50, null=True)
     email = models.EmailField()
     is_admin = models.BooleanField(default=False, null=True)
     phone_number = models.CharField(max_length=15)
@@ -69,7 +69,7 @@ class Document(models.Model):
     document_type_id = models.ForeignKey(Document_type, on_delete=models.RESTRICT)
     author_id = models.ForeignKey(User, on_delete=models.RESTRICT)
     title = models.CharField(max_length=255, null=True)
-    file = models.BinaryField()
+    file = models.FileField()
     # text = models.TextField(null=True)
     date = models.DateField()
 

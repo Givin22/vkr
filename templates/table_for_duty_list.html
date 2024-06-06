@@ -1,5 +1,5 @@
 {# ✓ #}
-<div class="table-responsive duty_table">
+<div class="table-responsive">
     {{ duty_info }}
 <br>
     {% for room_duty, day_duty_list in duty_info.items %}
@@ -10,7 +10,7 @@
     <table id="duty-table" class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
         <thead class="thead-fixed">
         <tr>
-            <th>Комната\День</th>
+            <th style="width: 10px">Комната\День</th>
             {% for room in rooms %}
                 <th>{{ room }}</th>
             {% endfor %}
@@ -38,7 +38,7 @@
                                 <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
                             {% else %}
 
-                                {% for room_duty, day_duty_list in duty_info.items %}
+                                 {% for room_duty, day_duty_list in duty_info.items %}
                                     {% if room_duty == room %}
                                         {% if day in day_duty_list %}
                                             <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"

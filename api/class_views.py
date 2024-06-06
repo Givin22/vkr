@@ -1,16 +1,22 @@
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
 from api.models import User, User_type
 import api.utilities.utilities as util
+from vkr.settings import LOGOUT_REDIRECT_URL
 
 
 class Home(View):
     def get(self, request):
-        context = util.get_section_elder(request)
 
-        return render(request, 'views/home.html', context)
+        if request.user.is_authenticated:
+            context = util.get_section_elder(request)
+
+            return render(request, 'views/home.html', context)
+
+        return redirect(to=LOGOUT_REDIRECT_URL)
+
 
 
 class DutyList(View):

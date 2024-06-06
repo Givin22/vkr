@@ -14,10 +14,10 @@ button {
 
 body {
     --sidebar-color: white;
-    --sidebar-back: rgb(133, 133, 255);
+    --sidebar-back: rgb(79, 150, 93);
     --btn-back: #333;
-    --sidebar-item: aqua;
-    --sidebar-item-hover: blue;
+    --sidebar-item: #0d0e0e;
+    --sidebar-item-hover: #494964;
 }
 
 /* Общие стили выше */
