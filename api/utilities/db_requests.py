@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import User, Room
+from api.models import User, Room, Document
 
 
 # TODO Check that two objects won't return (two elder or two assist)
@@ -90,3 +90,15 @@ def get_rooms_capacity_by_user(request):
     ]
 
     return {"get_rooms_capacity_by_user": rooms_capacity}
+
+
+def get_all_documents():
+    all_documents = Document.objects.first()
+
+    print(all_documents)
+
+    # all_documents = list(Document.objects.all())[0]
+
+    print(all_documents)
+
+    return all_documents

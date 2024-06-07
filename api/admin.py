@@ -15,7 +15,7 @@ from api.models import (
 )
 
 
-# TODO add "study_group"
+#  TODO add "study_group"
 class UserAdmin(DjangoUserAdmin):
     model = User
     list_display = ["first_name", "last_name", "room_id", "user_type_id", "email", "phone_number", "is_admin"]
@@ -57,3 +57,4 @@ admin.site.register(Document)
 admin.site.register(Feed)
 admin.site.register(Feed_to_document)
 admin.site.register(Document_user)
+

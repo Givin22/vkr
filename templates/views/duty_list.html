@@ -10,18 +10,20 @@
 
     <div class="col py-3 xp-3 main-content">
         <div class="col py-3 xp-3">
-            <h1>Лист дежурств по секции</h1>
+            <h1>Лист дежурств по секции на {{ user.room_id.floor }} этаже секции {{ user.room_id.section }}</h1>
             {{ info }}
         </div>
-
-
-        {% include 'table_for_duty_list.html' %}
-
 
         <div>
             <h2>Староста: {{ elder }}</h2>
             <h2>Заместитель: {{ assistant_elder }}</h2>
         </div>
+
+        <div class="duty_table">
+            {% include 'table_for_duty_list.html' %}
+        </div>
+
+
     </div>
 
 {% endblock %}

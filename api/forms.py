@@ -1,9 +1,6 @@
 from django import forms
 
 
-class LoginModel(forms.Form):
-    email = forms.EmailField(max_length=140)
-    password = forms.PasswordInput()
-
-# class formMoment(forms.Form):
-#     xxx = forms.BooleanField()
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
