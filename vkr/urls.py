@@ -30,9 +30,9 @@ urlpatterns = [
     path('', class_views.Home.as_view(), name="root_home"),
     path('home/', class_views.Home.as_view(), name='home'),
     path('faq/', TemplateView.as_view(template_name="views/faq.html"), name="faq"),
-    path('duty_list/', class_views.DutyList.as_view(), name='duty_list'),
+    path('duty_list/', class_views.DutyListView.as_view(), name='duty_list'),
     path('residentes/', class_views.ResidentsList.as_view(), name='residents'),
-    path('documents', class_views.Documents.as_view(), name="documents"),
+    path('documents', class_views.DocumentsView.as_view(), name="documents"),
 ]
 
 if settings.DEBUG:

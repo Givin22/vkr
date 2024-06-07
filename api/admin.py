@@ -11,7 +11,7 @@ from api.models import (
     Document,
     Feed_to_document,
     Feed,
-    Document_user
+    Document_user, DutyList
 )
 
 
@@ -54,6 +54,7 @@ admin.site.register(Schedule_type)
 admin.site.register(Schedule)
 admin.site.register(Document_type)
 admin.site.register(Document)
+admin.site.register(DutyList)
 admin.site.register(Feed)
 admin.site.register(Feed_to_document)
 admin.site.register(Document_user)

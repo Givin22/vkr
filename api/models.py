@@ -65,12 +65,20 @@ class Document_type(models.Model):
         return self.type
 
 
+class DutyList(models.Model):
+    author_id = models.ForeignKey(User, on_delete=models.RESTRICT)
+    info = models.CharField()
+
+    def __str__(self):
+        return f"Duty list of {self.author_id.room_id.floor}.{self.author_id.room_id.section}"
+
+
 class Document(models.Model):
     document_type_id = models.ForeignKey(Document_type, on_delete=models.RESTRICT)
     author_id = models.ForeignKey(User, on_delete=models.RESTRICT)
     title = models.CharField(max_length=255, null=True)
     file = models.FileField()
-    # text = models.TextField(null=True)
+    text = models.TextField(null=True)
     date = models.DateField()
 
     def __str__(self):

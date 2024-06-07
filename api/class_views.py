@@ -1,8 +1,10 @@
+import ast
+
 from django.views import View
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import User, User_type
+from api.models import User, User_type, Document, DutyList
 import api.utilities.db_requests as db_requests
 from vkr.settings import LOGOUT_REDIRECT_URL
 
@@ -22,7 +24,7 @@ class Home(View):
         return render(request, 'views/home.html', context)
 
 
-class DutyList(View):
+class DutyListView(View):
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect(to=LOGOUT_REDIRECT_URL)
@@ -40,6 +42,12 @@ class DutyList(View):
         context.update(elder_and_assist)
         context.update(get_room)
         context.update(days)
+
+        # print(request.user.id)
+
+        if not DutyList.objects.filter(author_id=request.user.id).first() == None:
+            duty_list = DutyList.objects.filter(author_id=request.user.id).first()
+            context.update({"duty_info": ast.literal_eval(duty_list.info)})
 
         return render(request, 'views/duty_list.html', context)
 
@@ -75,6 +83,15 @@ class DutyList(View):
             # if room not in duty.keys():
             #     duty.update({room: []})
             duty[int(room)].append(int(day))
+
+        if not DutyList.objects.filter(author_id=request.user.id).first() == None:
+            DutyList.objects.filter(author_id=request.user.id).first().delete()
+
+        duty_info = DutyList(
+            info=str(duty),
+            author_id=request.user
+        )
+        duty_info.save()
 
         context.update({"duty_info": duty})
 
@@ -137,7 +154,7 @@ class ResidentsList(View):
         return render(request, 'views/residents_list.html', context)
 
 
-class Documents(View):
+class DocumentsView(View):
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect(to=LOGOUT_REDIRECT_URL)
