@@ -1,0 +1,30 @@
+{# ✓ #}
+<div class="table-responsive duty_table">
+    <table id="duty-table" class="table table-sm table-condensed table-dark table-striped table-bordered text-center">
+        <thead class="thead-fixed">
+        <tr>
+            <th class="col-md-2">Комната\День</th>
+            <th class="col-md-2">{{ user.room_id.number }}</th>
+        </tr>
+
+        <tbody>
+
+            {% for day in days %}
+                <tr>
+                    {% if day in duty_info %}
+                        <td>
+                            {{ day }}
+                        </td>
+                        <td>
+                            <input type="checkbox" class="btn-check full-cell" id="{{ day }}-{{ room }}"
+                                   name="{{ day }}-{{ room }}" autocomplete="off" checked disabled
+                            >
+                            <label class="btn btn-outline-primary" for="{{ day }}-{{ room }}">✓</label>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>

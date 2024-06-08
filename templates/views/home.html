@@ -7,9 +7,21 @@
     {% include 'sidebar.html' %}
 
     <div class="col py-3 xp-3 main-content">
-        <h2>Староста: {{ elder }}</h2>
-        <h2>Заместитель: {{ assistant_elder }}</h2>
-        Главные новости секции и общежития
+        <div>
+            <h2>Староста: {{ elder }}</h2>
+            <h2>Заместитель: {{ assistant_elder }}</h2>
+{#            Главные новости секции и общежития#}
+        </div>
+
+        <div>
+            <h2 style="text-align: center">Таблица дежурств моей комнаты</h2>
+            {% if not duty_info %}
+                <h2 style="color: #006b1b; text-align: center">Дежурств нет!</h2>
+            {% else %}
+                {% include "table_for_duty_list_home.html" %}
+            {% endif %}
+        </div>
+
     </div>
 
 

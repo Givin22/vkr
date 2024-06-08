@@ -6,8 +6,6 @@
 
     {% include 'sidebar.html' %}
 
-
-
     <div class="col py-3 xp-3 main-content">
         <div class="col py-3 xp-3">
             <h1>Лист дежурств по секции на {{ user.room_id.floor }} этаже секции {{ user.room_id.section }}</h1>
@@ -19,10 +17,13 @@
             <h2>Заместитель: {{ assistant_elder }}</h2>
         </div>
 
-        <div class="duty_table">
-            {% include 'table_for_duty_list.html' %}
-        </div>
-
+        <form id="duty_list_form" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Сохранить расписание</button>
+            <div>
+                {% include 'table_for_duty_list.html' %}
+            </div>
+        </form>
 
     </div>
 

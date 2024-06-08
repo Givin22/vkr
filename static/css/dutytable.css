@@ -1,40 +1,12 @@
 .duty_table {
-  max-height: 600px;
-  overflow: auto;
-  /*max-width: 1200px;*/
-  margin-left: 0px;
-  margin-right: 25px;
+    overflow: auto;
+    max-width: 750px;
+    height: 450px;
 }
 
-@media only screen and (min-width: 768px) {
-  .duty_table {
-    margin-left: 400px;
-    margin-right: 400px;
-  }
-}
-
-/*th, td {*/
-/*  margin: 0;*/
-/*  padding: 0;*/
-/*}*/
-
-/*table {*/
-/*  width: 100%;*/
-/*  background: #4ac1f7;*/
-/*  margin-left: 25px;*/
-/*  max-height: 300px;*/
-/*  overflow-y: auto;*/
-/*}*/
-
-/*td, th {*/
-/*  padding: 0;*/
-/*  margin: 0;*/
-/*}*/
-
-/*.full-cell {*/
-/*  background: #006b1b;*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  box-sizing: border-box;*/
-/*  border: none;*/
+/*@media only screen and (min-width: 768px) {*/
+/*    .duty_table {*/
+/*          !*margin-left: 300px;*!*/
+/*          !*margin-right: 300px;*!*/
+/*    }*/
 /*}*/

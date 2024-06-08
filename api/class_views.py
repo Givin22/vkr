@@ -19,7 +19,32 @@ class Home(View):
         if not request.user.is_authenticated:
             return redirect(to=LOGOUT_REDIRECT_URL)
 
-        context = db_requests.get_section_elder(request)
+        context = {}
+
+        days = {
+            "days": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+                     28, 29, 30, 31]
+        }
+
+        get_room = db_requests.get_rooms_by_user(request)
+
+        context.update(days)
+        context.update(get_room)
+        context.update(db_requests.get_section_elder(request))
+
+        my_elder_id = User.objects.filter(user_type_id__type="Староста",
+                                          room_id__floor=request.user.room_id.floor,
+                                          room_id__section=request.user.room_id.section
+                                          ).first().id
+
+        get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
+        if not get_duty_list_from_db == None:
+            duty_list = ast.literal_eval(get_duty_list_from_db.info)
+            duty_list = duty_list.pop(request.user.room_id.number)
+            context.update({"duty_info": duty_list})
+
+
+
 
         return render(request, 'views/home.html', context)
 
@@ -35,8 +60,7 @@ class DutyListView(View):
         get_room = db_requests.get_rooms_by_user(request)
         # days = {"days": list(range(1, 32))} #  31 дня
         days = {
-            "days": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-                     28, 29, 30, 31]
+            "days": list(range(1, 32))
         }
 
         context.update(elder_and_assist)
@@ -45,8 +69,15 @@ class DutyListView(View):
 
         # print(request.user.id)
 
-        if not DutyList.objects.filter(author_id=request.user.id).first() == None:
-            duty_list = DutyList.objects.filter(author_id=request.user.id).first()
+        my_elder_id = User.objects.filter(user_type_id__type="Староста",
+                                          room_id__floor=request.user.room_id.floor,
+                                          room_id__section=request.user.room_id.section
+                                          ).first().id
+
+        get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
+
+        if not get_duty_list_from_db == None:
+            duty_list = get_duty_list_from_db
             context.update({"duty_info": ast.literal_eval(duty_list.info)})
 
         return render(request, 'views/duty_list.html', context)
@@ -84,11 +115,19 @@ class DutyListView(View):
             #     duty.update({room: []})
             duty[int(room)].append(int(day))
 
-        if not DutyList.objects.filter(author_id=request.user.id).first() == None:
-            DutyList.objects.filter(author_id=request.user.id).first().delete()
+        my_elder_id = User.objects.filter(user_type_id__type="Староста",
+                                          room_id__floor=request.user.room_id.floor,
+                                          room_id__section=request.user.room_id.section
+                                          ).first().id
+
+        get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
+
+        if not get_duty_list_from_db == None:
+            get_duty_list_from_db.delete()
 
         duty_info = DutyList(
             info=str(duty),
+            #  TODO plus elder_assist
             author_id=request.user
         )
         duty_info.save()

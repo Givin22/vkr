@@ -17,7 +17,7 @@
 {#                 alt="Аватарка юзера"> {# TODO change img #}
             <div class="sidebar__user-info">
                 <span class="sidebar__user-name">
-                    {{ user.first_name }} {{ user.last_name }}
+                    {{ user.first_name }} {{ user.last_name }} {{ user.room_id.number }}
                     {# TODO connect to DB #}
                 </span>
                 <span class="sidebar__user-job">
