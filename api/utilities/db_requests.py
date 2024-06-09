@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 from django.shortcuts import render
@@ -120,3 +121,14 @@ def add_document(request):
     save_file_DB.save()
 
     return {"result": "Файл сохранён!"}
+
+
+def delete_file(request, file_title):
+    file_title = file_title[0]  # There only one element in massive
+    doc = Document.objects.filter(title=file_title).first()
+    # print(doc.file.path)
+    if os.path.exists(doc.file.path):
+        os.remove(doc.file.path)
+        # print('DONE')
+    doc.delete()
+    return None

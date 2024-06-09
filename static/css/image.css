@@ -3,9 +3,14 @@
     text-align: center;
 }
 
+.image-container p {
+    margin-bottom: 0px;
+}
+
 .image {
     max-height: 50px;
     max-width: 50px;
+    /*margin-bottom: 0px;*/
 }
 
 @media only screen and (min-width: 768px) {

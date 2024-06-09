@@ -33,19 +33,20 @@ class Home(View):
         context.update(get_room)
         context.update(db_requests.get_section_elder(request))
 
-        my_elder_id = User.objects.filter(user_type_id__type="Староста",
-                                          room_id__floor=request.user.room_id.floor,
-                                          room_id__section=request.user.room_id.section
-                                          ).first().id
+        # TODO fix
+        if not request.user.is_staff:
 
-        get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
-        if not get_duty_list_from_db == None:
-            duty_list = ast.literal_eval(get_duty_list_from_db.info)
-            duty_list = duty_list.pop(request.user.room_id.number)
-            context.update({"duty_info": duty_list})
+            my_elder_id = User.objects.filter(user_type_id__type="Староста",
+                                              room_id__floor=request.user.room_id.floor,
+                                              room_id__section=request.user.room_id.section
+                                              ).first().id
 
+            get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
 
-
+            if not get_duty_list_from_db == None:
+                duty_list = ast.literal_eval(get_duty_list_from_db.info)
+                duty_list = duty_list.pop(request.user.room_id.number)
+                context.update({"duty_info": duty_list})
 
         return render(request, 'views/home.html', context)
 
@@ -69,17 +70,19 @@ class DutyListView(View):
         context.update(days)
 
         # print(request.user.id)
+        # TODO fix
+        if not request.user.is_staff:
 
-        my_elder_id = User.objects.filter(user_type_id__type="Староста",
-                                          room_id__floor=request.user.room_id.floor,
-                                          room_id__section=request.user.room_id.section
-                                          ).first().id
+            my_elder_id = User.objects.filter(user_type_id__type="Староста",
+                                              room_id__floor=request.user.room_id.floor,
+                                              room_id__section=request.user.room_id.section
+                                              ).first().id
 
-        get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
+            get_duty_list_from_db = DutyList.objects.filter(author_id=my_elder_id).first()
 
-        if not get_duty_list_from_db == None:
-            duty_list = get_duty_list_from_db
-            context.update({"duty_info": ast.literal_eval(duty_list.info)})
+            if not get_duty_list_from_db == None:
+                duty_list = get_duty_list_from_db
+                context.update({"duty_info": ast.literal_eval(duty_list.info)})
 
         return render(request, 'views/duty_list.html', context)
 
@@ -207,7 +210,18 @@ class DocumentsView(View):
         if not request.user.is_authenticated:
             return redirect(to=LOGOUT_REDIRECT_URL)
 
-        context = db_requests.add_document(request)
+        context = {}
+
+        act = dict(request.POST)
+        print(act)
+
+        if act.get('delete_file'):
+            db_requests.delete_file(request, act['delete_file'])
+            pass
+
+        elif request.FILES.get('upload_file'):
+            context = db_requests.add_document(request)
+            pass
 
         context.update({"documents": db_requests.get_all_documents()})
 
