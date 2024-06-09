@@ -1,25 +1,44 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}Документы{% endblock %}
 
 {% block content %}
 
     <div class="col py-3 xp-3 main-content">
-
+        <h1 style="text-align: center">Документы</h1>
         HI<br>
-{#        {{ documents }}<br>#}
-{#        {{ documents.file }}#}
-        {{ documents.file }}<br>
-        {{ documents.file.path }}<br>
-        {{ documents.file.name }}<br>
-        {{ documents.file.url }}<br>
-        {{ documents.title }}<br>
-        <a href="{{ documents.file.url }}">{{ documents.file.name }}</a><br>
-{#        {% for document in documents %}#}
-{#            <span>{{ document.title }} {{ document.file }} {{ document.pk }} {{ document.author_id__username }}</span>#}
-{#            <a href="{{ document.file.url }}" download="{{ document.file.url }}">DOWNLOAD</a>#}
-{#        {% endfor %}#}
+{#        {{ result }}#}
+{#                {{ documents }}<br>#}
+        {#        {{ documents.file }}#}
+        {#        {{ documents.file.path }}<br>#}
+        {#        {{ documents.file.name }}<br>#}
+{#                {{ documents.file.url }}<br>#}
+        {#        {{ documents.title }}<br>#}
+        {#        {{ STATIC_URL }}<br>#}
+        {% if user.is_admin %}
+            <div style="text-align: center">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="form-control" type="file" name="upload_file">
+                    <button class="btn btn-primary" type="submit">Загрузить документ</button>
+                </form>
+            </div>
+        {% endif %}
 
+        <div class="image-wrapper">
+
+            {% for document in documents %}
+                <div class="image-container">
+                    <a href="{{ document.file.url }}" target="_blank">
+                        <img class="image" src="{% static 'images/docx_img.jpg' %}" alt="images/docx_img.jpg">
+                    </a>
+                    <p>{{ document.title }}</p>
+                    <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
     {% include 'sidebar.html' %}

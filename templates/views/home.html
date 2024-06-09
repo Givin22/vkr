@@ -18,7 +18,9 @@
             {% if not duty_info %}
                 <h2 style="color: #006b1b; text-align: center">Дежурств нет!</h2>
             {% else %}
-                {% include "table_for_duty_list_home.html" %}
+                <div class="row justify-content-center">
+                    {% include "table_for_duty_list_home.html" %}
+                </div>
             {% endif %}
         </div>
 

@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import User, Room, Document
+from api.models import User, Room, Document, Document_type
 
 
 # TODO Check that two objects won't return (two elder or two assist)
@@ -92,13 +94,29 @@ def get_rooms_capacity_by_user(request):
     return {"get_rooms_capacity_by_user": rooms_capacity}
 
 
+#  TODO make it
 def get_all_documents():
-    all_documents = Document.objects.first()
+    # print(Document.objects.first())
+    # print(Document.objects.all())
+    # print(list(Document.objects.all()))
+    # return Document.objects.first()
 
-    print(all_documents)
+    return list(Document.objects.all())
 
-    # all_documents = list(Document.objects.all())[0]
 
-    print(all_documents)
+def add_document(request):
+    file = request.FILES['upload_file']
 
-    return all_documents
+    if Document.objects.filter(title=file.name).first():
+        return {"result": "Файл уже существует! Удалите старый и повторите"}
+
+    save_file_DB = Document(
+        document_type_id=Document_type.objects.filter(type="Администрация").first(),
+        author_id=User.objects.filter(username=request.user.username).first(),
+        title=file.name,
+        file=file,
+        date=datetime.today()
+    )
+    save_file_DB.save()
+
+    return {"result": "Файл сохранён!"}

@@ -1,10 +1,11 @@
 import ast
+import datetime
 
 from django.views import View
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import User, User_type, Document, DutyList
+from api.models import User, User_type, Document, DutyList, Document_type
 import api.utilities.db_requests as db_requests
 from vkr.settings import LOGOUT_REDIRECT_URL
 
@@ -199,6 +200,16 @@ class DocumentsView(View):
             return redirect(to=LOGOUT_REDIRECT_URL)
 
         context = {"documents": db_requests.get_all_documents()}
+
+        return render(request, 'views/documents.html', context)
+
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return redirect(to=LOGOUT_REDIRECT_URL)
+
+        context = db_requests.add_document(request)
+
+        context.update({"documents": db_requests.get_all_documents()})
 
         return render(request, 'views/documents.html', context)
 

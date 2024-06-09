@@ -20,7 +20,7 @@
         <form id="duty_list_form" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Сохранить расписание</button>
-            <div>
+            <div class="row justify-content-center">
                 {% include 'table_for_duty_list.html' %}
             </div>
         </form>
